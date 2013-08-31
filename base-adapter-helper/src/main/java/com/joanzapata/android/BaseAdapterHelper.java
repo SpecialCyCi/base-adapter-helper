@@ -51,14 +51,17 @@ public class BaseAdapterHelper {
 
     private final Context context;
 
+    private final int     position;
+
     private View convertView;
 
-    private BaseAdapterHelper(Context context, ViewGroup parent, int layoutId) {
+    private BaseAdapterHelper(Context context, ViewGroup parent, int layoutId, int position) {
         this.context = context;
         this.views = new SparseArray<View>();
         convertView = LayoutInflater.from(context) //
                 .inflate(layoutId, parent, false);
         convertView.setTag(this);
+        this.position = position;
     }
 
     /**
@@ -68,9 +71,9 @@ public class BaseAdapterHelper {
      * @param parent      the parent arg passed to the getView() method.
      * @return A BaseAdapterHelper instance.
      */
-    public static BaseAdapterHelper get(Context context, View convertView, ViewGroup parent, int layoutId) {
+    public static BaseAdapterHelper get(Context context, View convertView, ViewGroup parent, int layoutId, int position) {
         if (convertView == null) {
-            return new BaseAdapterHelper(context, parent, layoutId);
+            return new BaseAdapterHelper(context, parent, layoutId, position);
         }
         return (BaseAdapterHelper) convertView.getTag();
     }
@@ -199,6 +202,11 @@ public class BaseAdapterHelper {
     /** Retrieve the convertView */
     public View getView() {
         return convertView;
+    }
+
+    /** return the position of view */
+    public int getPosition() {
+        return position;
     }
 
     @SuppressWarnings("unchecked")
